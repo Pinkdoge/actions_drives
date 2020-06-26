@@ -7,7 +7,7 @@ on:
     types: [ started ]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
     - name: Get Share Link
@@ -15,7 +15,7 @@ jobs:
       run: echo "::set-output name=gds::$(jq -r .gdrive_link links.json)"
     - name: Download file
       run: |
-        apt install perl wget 
+        sudo apt install perl wget 
         git clone https://github.com/circulosmeos/gdown.pl.git gd/
         cd gd
         ./gdown.pl ${{ steps.link.outputs.gds }} downloaded_file
