@@ -27,6 +27,8 @@ jobs:
         cat tmp.txt | grep Download | cut -d ' ' -f 3 > gdlink.txt
     - name: Push File
       run: |
+        git config --global user.email "48847364+Insouciant21@users.noreply.github.com"
+        git config --global user.name "Insouciant21"
         git add gdlink.txt
         git commit -m "link"
         git push
