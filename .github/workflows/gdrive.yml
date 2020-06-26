@@ -1,0 +1,34 @@
+name: GDrive
+
+on:
+  push:
+    paths: links.json
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Share Link
+      id: link
+      run: echo "::set-output name=gds::$(jq -r .gdrive_link links.json)"
+    - name: Download file
+      run: |
+        apt install perl wget 
+        git clone https://github.com/circulosmeos/gdown.pl.git gd/
+        cd gd
+        ./gdown.pl ${{ steps.link.outputs.gds }} downloaded_file
+    - name: Upload
+      run: |
+        cp gd/downloaded_file .
+        curl -sL https://git.io/file-transfer | sh
+        ./transfer wet downloaded_file > tmp.txt
+        cat tmp.txt | grep Download | cut -d ' ' -f > gdlink.txt
+    - name: Push File
+      run: |
+        git add gdlink.txt
+        git commit -m "link"
+        git push
+        
+        
+        
