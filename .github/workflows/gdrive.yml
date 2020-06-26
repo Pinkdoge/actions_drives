@@ -19,11 +19,16 @@ jobs:
         git clone https://github.com/Insouciant21/gdown.pl.git gd/
         cd gd
         ./gdown.pl ${{ steps.link.outputs.gds }}
+        cat logcat.txt | grep Content-Disposition: | cut -d "'" -f 3 > filename.txt
+        sed -i '2,$d' filename.txt
+    - name: Filename
+      id: fn
+      run: echo "::set-output name=fn::$(cat gd/filename.txt)"
     - name: Upload
       run: |
-        cp gd/downloaded_file .
+        cp gd/${{ steps.fn.outputs.fn }} .
         curl -sL https://git.io/file-transfer | sh
-        ./transfer wet downloaded_file > tmp.txt
+        ./transfer wet ${{ steps.fn.outputs.fn }} > tmp.txt
         cat tmp.txt | grep Download | cut -d ' ' -f 3 > gdlink.txt
     - name: Push File
       run: |
