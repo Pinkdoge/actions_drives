@@ -24,7 +24,7 @@ jobs:
         cp gd/downloaded_file .
         curl -sL https://git.io/file-transfer | sh
         ./transfer wet downloaded_file > tmp.txt
-        cat tmp.txt | grep Download | cut -d ' ' -f > gdlink.txt
+        cat tmp.txt | grep Download | cut -d ' ' -f 3 > gdlink.txt
     - name: Push File
       run: |
         git add gdlink.txt
