@@ -16,9 +16,9 @@ jobs:
     - name: Download file
       run: |
         sudo apt install perl wget 
-        git clone https://github.com/circulosmeos/gdown.pl.git gd/
+        git clone https://github.com/Insouciant21/gdown.pl.git gd/
         cd gd
-        ./gdown.pl ${{ steps.link.outputs.gds }} downloaded_file
+        ./gdown.pl ${{ steps.link.outputs.gds }}
     - name: Upload
       run: |
         cp gd/downloaded_file .
