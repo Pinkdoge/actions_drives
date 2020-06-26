@@ -3,7 +3,8 @@ name: GDrive
 on:
   push:
     paths: links.json
-
+  watch:
+    types: [ started ]
 jobs:
   build:
     runs-on: ubuntu-latest
