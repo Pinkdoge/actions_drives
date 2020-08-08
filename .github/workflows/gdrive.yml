@@ -26,7 +26,7 @@ jobs:
       run: echo "::set-output name=fn::$(cat gd/filename.txt)"
     - name: Upload
       run: |
-        cp gd/${{ steps.fn.outputs.fn }} .
+        cp -r gd/${{ steps.fn.outputs.fn }} .
         curl -sL https://git.io/file-transfer | sh
         ./transfer wet ${{ steps.fn.outputs.fn }} > tmp.txt
         cat tmp.txt | grep Download | cut -d ' ' -f 3 > gdlink.txt
